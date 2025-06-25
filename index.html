@@ -18,7 +18,7 @@
                     <div class="card text-bg-primary mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Umidade Relativa do Solo</h5>
-                            <span class="fw-bold">80%</span>
+                            <span id="spanUmidade" class="fw-bold"></span>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="card text-bg-primary mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Temperatura do Ambiente</h5>
-                            <span class="fw-bold">25ºC</span>
+                            <span id="spanTemperatura" class="fw-bold"></span>
                         </div>
                     </div>
                 </div>
@@ -163,6 +163,13 @@
 
                 // Set a callback to run when the Google Visualization API is loaded.
                 google.charts.setOnLoadCallback(drawChart);
+
+                $('#spanUmidade').text(
+                    historicoUmidade[historicoUmidade.length - 1][1]
+                );
+                $('#spanTemperatura').text(
+                    historicoTemperatura[historicoTemperatura.length - 1][1]
+                );
             });
 
             async function getDadosTemperatura() {
