@@ -155,8 +155,9 @@
             let historicoUmidade = [];
             let historicoTemperatura = [];
 
-            $(() => {
-                getDados('umidade');
+            $(async () => {
+                await getDadosTemperatura();
+                await getDadosUmidade();
                 // Load the Visualization API and the corechart package.
                 google.charts.load('current', { packages: ['corechart'] });
 
@@ -164,11 +165,25 @@
                 google.charts.setOnLoadCallback(drawChart);
             });
 
-            async function getDados(endpoint) {
+            async function getDadosTemperatura() {
+                let dados = [];
                 await $.ajax({
-                    url: `http://192.168.7.123/${endpoint}`,
+                    url: `http://192.168.7.123/temperatura`,
                     success: (dados) => {
-                        console.log(dados);
+                        historicoTemperatura = dados;
+                    },
+                    error: (xhr, status, error) => {
+                        console.log(error);
+                    },
+                });
+            }
+
+            async function getDadosUmidade() {
+                let dados = [];
+                await $.ajax({
+                    url: `http://192.168.7.123/umidade`,
+                    success: (dados) => {
+                        historicoUmidade = dados;
                     },
                     error: (xhr, status, error) => {
                         console.log(error);
@@ -219,28 +234,10 @@
                 ]);
 
                 let dataHistoricoUmidade =
-                    google.visualization.arrayToDataTable([
-                        ['Horário', 'Umidade'],
-                        ['12:00', 80],
-                        ['13:00', 60],
-                        ['14:00', 32],
-                        ['15:00', 10],
-                        ['16:00', 100],
-                        ['17:00', 90],
-                        ['18:00', 70],
-                    ]);
+                    google.visualization.arrayToDataTable(historicoUmidade);
 
                 let dataHistoricoTemperatura =
-                    google.visualization.arrayToDataTable([
-                        ['Horário', 'Temperatura'],
-                        ['12:00', 25],
-                        ['13:00', 26],
-                        ['14:00', 27],
-                        ['15:00', 27],
-                        ['16:00', 26],
-                        ['17:00', 24],
-                        ['18:00', 22],
-                    ]);
+                    google.visualization.arrayToDataTable(historicoTemperatura);
 
                 let optionsUmidade = {
                     title: 'Gráfico - Umidade',
