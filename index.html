@@ -48,14 +48,14 @@
                     <tr class="table-primary">
                         <th class="col-6">Rótulo</th>
                         <th class="col-3">Tipo</th>
-                        <th class="col-3">Pontos (a, b, c, d)</th>
+                        <th class="col-3">Pontos (a, b, c)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Completamente seco</td>
                         <td>Trapezoidal</td>
-                        <td>(0, 0, 20, 40)</td>
+                        <td>(0, 20, 40)</td>
                     </tr>
                     <tr>
                         <td>Meio úmido</td>
@@ -65,7 +65,7 @@
                     <tr>
                         <td>Completamente úmido</td>
                         <td>Trapezoidal</td>
-                        <td>(60, 80, 100, 100)</td>
+                        <td>(60, 80, 100)</td>
                     </tr>
                 </tbody>
             </table>
@@ -79,24 +79,24 @@
                     <tr class="table-primary">
                         <th class="col-6">Rótulo</th>
                         <th class="col-3">Tipo</th>
-                        <th class="col-3">Pontos (a, b, c, d)</th>
+                        <th class="col-3">Pontos (a, b, c)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Muito frio</td>
                         <td>Trapezoidal</td>
-                        <td>(0, 0, 10, 18)</td>
+                        <td>(0, 10, 18)</td>
                     </tr>
                     <tr>
                         <td>Ambiente</td>
                         <td>Triangular</td>
-                        <td>(15, 25, 35)</td>
+                        <td>(10, 18, 27, 35)</td>
                     </tr>
                     <tr>
                         <td>Muito quente</td>
                         <td>Trapezoidal</td>
-                        <td>(32, 40, 50, 50)</td>
+                        <td>(27, 40, 50)</td>
                     </tr>
                 </tbody>
             </table>
@@ -112,24 +112,24 @@
                     <tr class="table-primary">
                         <th class="col-6">Rótulo</th>
                         <th class="col-3">Tipo</th>
-                        <th class="col-3">Pontos (a, b, c, d)</th>
+                        <th class="col-3">Pontos (a, b, c)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Sem água</td>
+                        <td>Pouco Tempo</td>
                         <td>Trapezoidal</td>
-                        <td>(0, 0, 20, 35)</td>
+                        <td>(0, 20, 40)</td>
                     </tr>
                     <tr>
-                        <td>Água</td>
+                        <td>Tempo Médio</td>
                         <td>Triangular</td>
                         <td>(30, 50, 70)</td>
                     </tr>
                     <tr>
-                        <td>Muita água</td>
+                        <td>Muito Tempo</td>
                         <td>Trapezoidal</td>
-                        <td>(65, 80, 100, 100)</td>
+                        <td>(60, 80, 100)</td>
                     </tr>
                 </tbody>
             </table>
@@ -164,13 +164,15 @@
                 google.charts.setOnLoadCallback(drawChart);
             });
 
-            async function getDados() {
+            async function getDados(endpoint) {
                 await $.ajax({
-                    url: '',
+                    url: `192.168.4.1/${endpoint}`,
                     success: (dados) => {
                         console.log(dados);
                     },
-                    error: (xhr, status, error) => {},
+                    error: (xhr, status, error) => {
+                        console.log(error);
+                    },
                 });
             }
 
@@ -199,14 +201,21 @@
                 ]);
 
                 let dataAgua = google.visualization.arrayToDataTable([
-                    ['Quantidade de Água', 'Sem água', 'Água', 'Muita água'],
+                    [
+                        'Segundos aberto',
+                        'Pouco Tempo',
+                        'Tempo Médio',
+                        'Muito Tempo',
+                    ],
                     ['0', 100, 0, 0],
-                    ['20', 100, 0, 0],
-                    ['30', 50, 50, 0],
-                    ['50', 0, 100, 0],
-                    ['65', 0, 50, 50],
-                    ['80', 0, 0, 100],
-                    ['100', 0, 0, 100],
+                    ['2', 100, 0, 0],
+                    ['3', 50, 0, 0],
+                    ['4', 0, 50, 0],
+                    ['5', 0, 100, 0],
+                    ['6', 0, 50, 0],
+                    ['7', 0, 0, 50],
+                    ['8', 0, 0, 100],
+                    ['10', 0, 0, 100],
                 ]);
 
                 let dataHistoricoUmidade =
