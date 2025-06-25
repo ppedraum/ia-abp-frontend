@@ -165,10 +165,11 @@
                 google.charts.setOnLoadCallback(drawChart);
 
                 $('#spanUmidade').text(
-                    historicoUmidade[historicoUmidade.length - 1][1]
+                    historicoUmidade[historicoUmidade.length - 1][1] + '%'
                 );
                 $('#spanTemperatura').text(
-                    historicoTemperatura[historicoTemperatura.length - 1][1]
+                    historicoTemperatura[historicoTemperatura.length - 1][1] +
+                        'ºC'
                 );
             });
 
