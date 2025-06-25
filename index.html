@@ -166,7 +166,7 @@
 
             async function getDados(endpoint) {
                 await $.ajax({
-                    url: `192.168.4.1/${endpoint}`,
+                    url: `http://192.168.4.1/${endpoint}`,
                     success: (dados) => {
                         console.log(dados);
                     },
